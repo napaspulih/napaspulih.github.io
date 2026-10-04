@@ -127,10 +127,9 @@ p { margin: 0; }
 }
 .header.tergulir { border-bottom-color: var(--garis); }
 .header-isi { display: flex; align-items: center; gap: 24px; height: 76px; }
-.merek { display: inline-flex; align-items: center; gap: 4px; text-decoration: none; color: var(--tinta); flex: none; }
+.merek { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--tinta); flex: none; }
 .merek img { height: 42px; width: auto; }
 .merek-kata { display: grid; font-family: var(--f-teks); font-weight: 600; font-size: 1.28rem; line-height: .98; letter-spacing: -0.01em; }
-.merek-kata span:last-child { justify-self: end; }
 .nav { display: flex; gap: 4px; margin-left: auto; }
 .nav a {
   padding: 8px 12px; border-radius: 999px; color: var(--tinta);

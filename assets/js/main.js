@@ -58,7 +58,7 @@ function toast(teks) {
 function merekHTML() {
   return `<a class="merek" href="index.html" aria-label="Napas Pulih, ke beranda">
     <img src="assets/img/logo.png" alt="" width="27" height="42">
-    <span class="merek-kata" aria-hidden="true"><span>Napas</span><span>ulih</span></span>
+    <span class="merek-kata" aria-hidden="true"><span>Napas</span><span>Pulih</span></span>
   </a>`;
 }
 
@@ -113,7 +113,7 @@ function pasangFooter() {
         <div>
           <a class="merek" href="index.html" aria-label="Napas Pulih">
             <img src="assets/img/logo-putih.png" alt="" width="27" height="42">
-            <span class="merek-kata" aria-hidden="true"><span>Napas</span><span>ulih</span></span>
+            <span class="merek-kata" aria-hidden="true"><span>Napas</span><span>Pulih</span></span>
           </a>
           <p class="footer-disclaimer">Pelatihan napas fungsional dan pendampingan bersama Dika Duwiyanto, S.Ag., M.Psi. Materi di situs ini bersifat edukasi dan tidak menggantikan diagnosis atau pengobatan dari tenaga kesehatan.</p>
         </div>
