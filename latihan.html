@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Latihan Napas Interaktif | Napas Pulih</title>
+  <meta name="description" content="Latihan napas berpandu gratis: Napas Tenang, Napas Lega, Napas Kotak, Napas Menjelang Tidur, Napas Ringan, dan tes jeda napas (BOLT).">
+  <meta name="theme-color" content="#008081">
+  <link rel="icon" href="assets/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-halaman="latihan">
+  <div id="header"></div>
+
+  <main>
+    <section class="hero-dalam">
+      <div class="wadah">
+        <span class="penanda">Latihan napas</span>
+        <h1>Latihan napas berpandu</h1>
+        <p class="lead">Pilih teknik, atur durasi, lalu ikuti lingkaran. Tarik napas saat lingkaran membesar dan hembuskan saat mengecil. Bernapaslah lewat hidung, pelan dan ringan.</p>
+      </div>
+    </section>
+
+    <section class="bagian" style="padding-top:0">
+      <div class="wadah latihan-tata">
+        <div>
+          <h2 class="kecil" style="font-family:var(--f-teks);font-size:.95rem;font-weight:700;color:var(--tinta);margin-bottom:12px">Pilih teknik</h2>
+          <div class="daftar-teknik" id="daftar-teknik"></div>
+        </div>
+
+        <div class="panggung">
+          <div class="panggung-kepala">
+            <div>
+              <h2 id="teknik-judul">Napas Tenang</h2>
+              <p id="teknik-ringkas"></p>
+            </div>
+            <div class="status-sesi" aria-live="off">
+              <div>Sisa waktu<strong id="sisa-waktu">3:00</strong></div>
+              <div>Putaran<strong id="putaran">0 / 16</strong></div>
+            </div>
+          </div>
+
+          <div class="orb-wadah">
+            <span class="orb-cincin"></span>
+            <span class="orb-cincin dalam"></span>
+            <span class="orb" id="orb"></span>
+            <svg class="orb-progres" viewBox="0 0 100 100" aria-hidden="true"><circle class="jalur" cx="50" cy="50" r="49"/><circle class="isi" id="orb-progres-isi" cx="50" cy="50" r="49"/></svg>
+            <div class="orb-teks" aria-live="polite">
+              <span class="orb-fase" id="orb-fase">Siap</span>
+              <span class="orb-hitung" id="orb-hitung"></span>
+            </div>
+          </div>
+
+          <div class="atur-kustom" id="atur-kustom" hidden>
+            <div class="isian"><label for="k-tarik">Tarik (detik)</label><input id="k-tarik" type="number" min="1" max="30" step="0.5" inputmode="decimal"></div>
+            <div class="isian"><label for="k-tahan1">Tahan</label><input id="k-tahan1" type="number" min="0" max="30" step="0.5" inputmode="decimal"></div>
+            <div class="isian"><label for="k-buang">Buang</label><input id="k-buang" type="number" min="1" max="30" step="0.5" inputmode="decimal"></div>
+            <div class="isian"><label for="k-tahan2">Tahan</label><input id="k-tahan2" type="number" min="0" max="30" step="0.5" inputmode="decimal"></div>
+          </div>
+
+          <div class="kontrol">
+            <div class="kontrol-grup">
+              <span id="label-durasi">Durasi</span>
+              <div class="segmen" id="pilih-durasi" role="group" aria-labelledby="label-durasi">
+                <button type="button" data-menit="1" aria-pressed="false">1 menit</button>
+                <button type="button" data-menit="3" aria-pressed="true">3 menit</button>
+                <button type="button" data-menit="5" aria-pressed="false">5 menit</button>
+                <button type="button" data-menit="10" aria-pressed="false">10 menit</button>
+              </div>
+            </div>
+            <div class="kontrol-grup">
+              <span>Suara</span>
+              <div style="display:flex;gap:18px;flex-wrap:wrap">
+                <label class="saklar"><input type="checkbox" id="suara" checked> Nada penanda</label>
+                <label class="saklar"><input type="checkbox" id="panduan-suara"> Aba-aba suara</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="deret-tombol">
+            <button class="tombol tombol-utama" id="tombol-mulai" type="button" style="min-width:160px">Mulai</button>
+            <button class="tombol tombol-garis" id="tombol-henti" type="button" hidden>Hentikan</button>
+          </div>
+
+          <div class="catatan" id="pesan-selesai" hidden>
+            <strong>Latihan selesai.</strong>
+            <p>Duduk diam sejenak dan biarkan napas kembali normal. Perhatikan apa yang berubah di tubuh dan pikiran Anda sebelum kembali beraktivitas.</p>
+          </div>
+
+          <div class="info-teknik">
+            <div><h4>Manfaat</h4><p id="info-manfaat"></p></div>
+            <div><h4>Cara melakukan</h4><p id="info-cara"></p></div>
+            <div><h4>Kapan dipakai</h4><p id="info-kapan"></p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TES JEDA NAPAS ===== -->
+    <section class="bagian bagian-putih" id="tes">
+      <div class="wadah tes-tata">
+        <div style="display:grid;gap:24px">
+          <div class="kepala-bagian" style="margin-bottom:0">
+            <span class="penanda">Ukur kemajuan</span>
+            <h2>Tes jeda napas</h2>
+            <p class="lead">Mengukur berapa detik Anda nyaman menahan napas setelah buang napas biasa. Dalam metode Oxygen Advantage® tes ini dikenal sebagai BOLT. Lakukan pagi hari setelah bangun agar hasilnya konsisten.</p>
+          </div>
+          <ol class="tes-langkah">
+            <li><span>Duduk tegak dan bernapas biasa lewat hidung selama satu menit.</span></li>
+            <li><span>Tarik napas biasa, lalu buang napas biasa. Jangan dihabiskan.</span></li>
+            <li><span>Tekan <strong>Mulai tes</strong>, lalu tutup hidung dengan jari.</span></li>
+            <li><span>Tekan <strong>Berhenti</strong> saat muncul dorongan pertama untuk bernapas, misalnya perut atau leher mulai berkedut. Lalu bernapas lagi lewat hidung dengan tenang.</span></li>
+          </ol>
+          <p class="kecil">Ini bukan tes menahan napas selama mungkin. Napas pertama setelah tes harus tetap tenang. Jika Anda terengah, berarti menahan terlalu lama.</p>
+        </div>
+
+        <div class="stopwatch">
+          <div class="stopwatch-angka" id="tes-angka" aria-live="polite">0<small> dtk</small></div>
+          <button class="tombol tombol-utama" id="tes-tombol" type="button">Mulai tes</button>
+          <div class="skala" aria-hidden="true">
+            <div class="skala-batang"><span class="skala-penunjuk" id="skala-penunjuk" style="left:0%"></span></div>
+            <div class="skala-label"><span>0</span><span>10</span><span>20</span><span>30</span><span>40+</span></div>
+          </div>
+          <div class="hasil-tes" id="tes-hasil" hidden></div>
+          <div class="riwayat" id="tes-riwayat"></div>
+          <button class="tombol tombol-garis tombol-kecil" id="tes-hapus" type="button" hidden>Hapus riwayat</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== KEAMANAN ===== -->
+    <section class="bagian">
+      <div class="wadah dua-kolom" style="align-items:start">
+        <div class="catatan">
+          <strong>Sebelum berlatih</strong>
+          <ul>
+            <li>Berlatihlah dalam posisi duduk atau berbaring, jangan saat menyetir atau berada di air.</li>
+            <li>Hentikan dan bernapas biasa jika pusing, sesak, atau tidak nyaman.</li>
+            <li>Jika sedang hamil, punya penyakit jantung, tekanan darah tinggi, epilepsi, atau gangguan panik, hindari fase menahan napas yang lama dan konsultasikan dulu dengan dokter.</li>
+            <li>Latihan ini bersifat edukasi dan tidak menggantikan pengobatan medis.</li>
+          </ul>
+        </div>
+        <div style="display:grid;gap:18px">
+          <h2>Ingin latihan yang disusun khusus untuk Anda?</h2>
+          <p class="lead">Dalam pendampingan personal, pola napas Anda dinilai lebih dulu, lalu program latihan disusun sesuai keluhan dan tujuan Anda.</p>
+          <div class="deret-tombol"><a class="tombol tombol-utama" href="pendampingan.html">Lihat pendampingan</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script src="assets/js/pengaturan.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/latihan.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Toko | Napas Pulih</title>
+  <meta name="description" content="Buku Napas Pulih, 5 Metode PULIH, alat bantu napas, dan materi latihan digital karya Dika Duwiyanto.">
+  <meta name="theme-color" content="#008081">
+  <link rel="icon" href="assets/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-halaman="toko">
+  <div id="header"></div>
+
+  <main>
+    <section class="hero-dalam">
+      <div class="wadah">
+        <span class="penanda">Toko</span>
+        <h1>Toko Napas Pulih</h1>
+        <p class="lead">Buku, alat bantu, dan materi latihan untuk melanjutkan latihan napas di rumah. Pesan lewat WhatsApp, bayar dengan transfer bank setelah pesanan dikonfirmasi.</p>
+      </div>
+    </section>
+
+    <section class="bagian" style="padding-top:0">
+      <div class="wadah">
+        <div class="filter" role="group" aria-label="Saring kategori">
+          <button class="chip" type="button" data-saring="semua" aria-pressed="true">Semua</button>
+          <button class="chip" type="button" data-saring="buku" aria-pressed="false">Buku</button>
+          <button class="chip" type="button" data-saring="alat" aria-pressed="false">Alat bantu napas</button>
+          <button class="chip" type="button" data-saring="digital" aria-pressed="false">Produk digital</button>
+        </div>
+        <div class="grid-produk" id="grid-toko"></div>
+      </div>
+    </section>
+
+    <section class="bagian bagian-putih">
+      <div class="wadah">
+        <div class="kepala-bagian">
+          <span class="penanda">Cara memesan</span>
+          <h2>Empat langkah sampai barang tiba</h2>
+        </div>
+        <div class="langkah">
+          <div class="langkah-item"><h3>Pilih produk</h3><p>Tekan tombol pada produk untuk memasukkannya ke keranjang.</p></div>
+          <div class="langkah-item"><h3>Isi data</h3><p>Buka keranjang, lalu tulis nama dan alamat pengiriman.</p></div>
+          <div class="langkah-item"><h3>Kirim pesanan</h3><p>Pesanan terkirim ke WhatsApp. Admin membalas dengan total ongkir dan nomor rekening.</p></div>
+          <div class="langkah-item"><h3>Bayar dan terima</h3><p>Setelah transfer, buku dan alat dikirim. Produk digital dikirim lewat WhatsApp.</p></div>
+        </div>
+        <div class="deret-tombol" style="margin-top:40px">
+          <button class="tombol tombol-utama" type="button" data-buka-keranjang>Buka keranjang</button>
+          <a class="tombol tombol-garis" data-wa="Halo Napas Pulih, saya ingin bertanya tentang produk di toko.">Tanya dulu lewat WhatsApp</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script src="assets/js/pengaturan.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const grid = document.getElementById("grid-toko");
+      const chips = document.querySelectorAll("[data-saring]");
+      function saring(k) {
+        tampilkanProduk(grid, k === "semua" ? null : (p) => p.kategori === k);
+        chips.forEach((c) => c.setAttribute("aria-pressed", c.dataset.saring === k));
+      }
+      chips.forEach((c) => c.addEventListener("click", () => saring(c.dataset.saring)));
+      const awal = location.hash.replace("#", "");
+      saring(["buku", "alat", "digital"].includes(awal) ? awal : "semua");
+      window.addEventListener("hashchange", () => {
+        const k = location.hash.replace("#", "");
+        if (["buku", "alat", "digital"].includes(k)) saring(k);
+      });
+    });
+  </script>
+</body>
+</html>
