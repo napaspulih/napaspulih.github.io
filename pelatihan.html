@@ -183,16 +183,19 @@
         <form class="form" data-form-wa="saya ingin mendaftar Pelatihan 5 Metode PULIH." novalidate>
           <div class="form-baris">
             <div class="isian"><label for="d-nama">Nama</label><input id="d-nama" data-label="Nama" autocomplete="name" required></div>
-            <div class="isian"><label for="d-kota">Kota</label><input id="d-kota" data-label="Kota" autocomplete="address-level2"></div>
+            <div class="isian"><label for="d-email">Email (untuk masuk ke Kelas Saya)</label><input id="d-email" type="email" inputmode="email" data-label="Email" autocomplete="email" required placeholder="nama@gmail.com"></div>
           </div>
-          <div class="isian">
-            <label for="d-kelas">Pilihan kelas</label>
-            <select id="d-kelas" data-label="Kelas" required>
-              <option value="Kelas Live">Kelas Live</option>
-              <option value="Kelas Mandiri">Kelas Mandiri</option>
-              <option value="Untuk Lembaga">Untuk Lembaga</option>
-              <option value="Belum tahu, ingin bertanya dulu">Belum tahu, ingin bertanya dulu</option>
-            </select>
+          <div class="form-baris">
+            <div class="isian"><label for="d-kota">Kota</label><input id="d-kota" data-label="Kota" autocomplete="address-level2"></div>
+            <div class="isian">
+              <label for="d-kelas">Pilihan kelas</label>
+              <select id="d-kelas" data-label="Kelas" required>
+                <option value="Kelas Live">Kelas Live</option>
+                <option value="Kelas Mandiri">Kelas Mandiri</option>
+                <option value="Untuk Lembaga">Untuk Lembaga</option>
+                <option value="Belum tahu, ingin bertanya dulu">Belum tahu, ingin bertanya dulu</option>
+              </select>
+            </div>
           </div>
           <div class="isian"><label for="d-tujuan">Apa yang ingin Anda perbaiki? (opsional)</label><textarea id="d-tujuan" data-label="Yang ingin diperbaiki" placeholder="Misalnya: sering cemas, sulit tidur, napas pendek"></textarea></div>
           <p class="pesan-galat" aria-live="polite"></p>
@@ -215,6 +218,7 @@
           <details><summary>Apakah cocok untuk remaja dan lansia?</summary><div class="jawab"><p>Ya. Latihan disesuaikan dengan kondisi tubuh, dan setiap teknik punya versi yang lebih ringan.</p></div></details>
           <details><summary>Apakah pelatihan ini menggantikan pengobatan?</summary><div class="jawab"><p>Tidak. Pelatihan ini adalah edukasi dan latihan untuk mendukung kesehatan. Jika Anda sedang dalam perawatan dokter, tetap lanjutkan dan sampaikan bahwa Anda mengikuti latihan napas.</p></div></details>
           <details><summary>Bagaimana cara membayar?</summary><div class="jawab"><p>Setelah Anda mendaftar lewat WhatsApp, admin akan mengirimkan detail pembayaran melalui transfer bank.</p></div></details>
+          <details><summary>Bagaimana cara membuka materi setelah membayar?</summary><div class="jawab"><p>Setelah pembayaran dikonfirmasi, akun Anda diaktifkan dan Anda menerima kabar lewat WhatsApp. Buka halaman <a href="kelas.html">Kelas Saya</a>, ketik email yang Anda daftarkan, lalu klik tautan masuk yang dikirim ke email tersebut. Tidak perlu kata sandi.</p></div></details>
         </div>
       </div>
     </section>
