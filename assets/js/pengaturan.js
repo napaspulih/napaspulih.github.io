@@ -9,8 +9,8 @@
 const PENGATURAN = {
   // Nomor WhatsApp untuk semua tombol pendaftaran & pemesanan.
   // Tulis dengan kode negara 62, TANPA tanda +, spasi, atau angka 0 di depan.
-  // Contoh: 0821-3744-7852  ->  "6282137447852"
-  whatsapp: "6282137447852",
+  // Contoh: 0851-1714-2198  ->  "6285117142198"
+  whatsapp: "6285117142198",
 
   email: "dikaduwiyanto@gmail.com",
 

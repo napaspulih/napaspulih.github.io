@@ -48,7 +48,7 @@ Buka `assets/js/pengaturan.js` di VS Code.
 
 | Yang dicek | Keterangan |
 |---|---|
-| `whatsapp` | Saat ini diisi `6282137447852`. Pastikan ini nomor yang benar untuk Napas Pulih. Tulis dengan awalan 62, tanpa 0, spasi, atau tanda +. |
+| `whatsapp` | Saat ini diisi `6285117142198` (WA Napas Pulih). Tulis dengan awalan 62, tanpa 0, spasi, atau tanda +. |
 | `instagram`, `youtube`, `facebook` | Pastikan tautannya benar. Kosongkan (`""`) jika belum ada. |
 | Harga produk | Semua harga di `PRODUK` adalah **contoh**. Ganti sesuai harga Anda. |
 | Status buku | `"tersedia"`, `"preorder"`, atau `"habis"`. |
