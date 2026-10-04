@@ -10,6 +10,7 @@ const DAFTAR_MENU = [
   { href: "pendampingan.html", label: "Pendampingan", id: "pendampingan" },
   { href: "toko.html", label: "Toko", id: "toko" },
   { href: "tentang.html", label: "Tentang", id: "tentang" },
+  { href: "kelas.html", label: "Kelas Saya", id: "kelas" },
 ];
 
 const IKON = {
@@ -124,6 +125,7 @@ function pasangFooter() {
             <li><a href="latihan.html#tes">Tes jeda napas</a></li>
             <li><a href="pelatihan.html">Pelatihan 5 Metode PULIH</a></li>
             <li><a href="pendampingan.html">Pendampingan personal</a></li>
+            <li><a href="kelas.html">Kelas Saya (peserta)</a></li>
           </ul>
         </div>
         <div>

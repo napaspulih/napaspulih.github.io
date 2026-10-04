@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Kelas Saya | Napas Pulih</title>
+  <meta name="description" content="Ruang belajar peserta Pelatihan 5 Metode PULIH: video, audio, dan lembar latihan.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#008081">
+  <link rel="icon" href="assets/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261005-1">
+</head>
+<body data-halaman="kelas">
+  <div id="header"></div>
+
+  <main>
+    <section class="bagian ruang-kelas">
+      <div class="wadah">
+
+        <div data-keadaan="memuat">
+          <p class="kecil">Memuat…</p>
+        </div>
+
+        <div data-keadaan="masuk" hidden>
+          <div class="panel-masuk">
+            <span class="penanda">Kelas Saya</span>
+            <h1>Masuk ke ruang belajar</h1>
+            <p class="lead">Untuk peserta Pelatihan 5 Metode PULIH. Ketik email yang Anda daftarkan, lalu buka tautan masuk yang kami kirim ke email Anda. Tidak perlu kata sandi.</p>
+            <form class="form" id="form-masuk" novalidate>
+              <div class="isian">
+                <label for="email-masuk">Email</label>
+                <input id="email-masuk" type="email" autocomplete="email" inputmode="email" required placeholder="nama@email.com">
+              </div>
+              <p class="pesan-galat" id="galat-masuk" aria-live="polite"></p>
+              <button class="tombol tombol-utama" type="submit" id="tombol-masuk">Kirim tautan masuk</button>
+            </form>
+            <div class="kotak-info" id="info-terkirim" hidden>
+              <h2>Cek email Anda</h2>
+              <p>Tautan masuk sudah dikirim ke <strong id="email-terkirim"></strong>. Buka email itu di perangkat ini, lalu klik tautannya. Tidak ada di kotak masuk? Periksa folder Spam atau Promosi.</p>
+            </div>
+            <p class="kecil">Belum terdaftar? <a href="pelatihan.html#daftar">Lihat pilihan kelas</a> atau <a data-wa="Halo Napas Pulih, saya ingin bertanya tentang akses Kelas Saya.">hubungi kami lewat WhatsApp</a>.</p>
+          </div>
+        </div>
+
+        <div data-keadaan="belum-aktif" hidden>
+          <div class="panel-masuk">
+            <span class="penanda">Kelas Saya</span>
+            <h1>Akun Anda belum aktif</h1>
+            <p class="lead">Anda masuk sebagai <strong id="email-belum-aktif"></strong>, tetapi email ini belum terdaftar sebagai peserta. Bila Anda sudah transfer, kirim bukti pembayaran lewat WhatsApp dan sebutkan email ini. Akses dibuka setelah pembayaran dikonfirmasi.</p>
+            <div class="deret-tombol">
+              <a class="tombol tombol-utama" id="wa-aktivasi" target="_blank" rel="noopener">Konfirmasi lewat WhatsApp</a>
+              <button class="tombol tombol-garis" type="button" data-keluar>Keluar</button>
+            </div>
+          </div>
+        </div>
+
+        <div data-keadaan="kelas" hidden>
+          <div class="kepala-kelas">
+            <div>
+              <span class="penanda" id="label-kelas">Kelas Saya</span>
+              <h1 id="sapaan">Selamat datang</h1>
+              <p class="lead">Materi tersusun per pekan. Ikuti urutannya, dan isi jurnal Anda setiap hari.</p>
+            </div>
+            <div class="deret-tombol">
+              <a class="tombol tombol-garis tombol-kecil" href="admin.html" id="tautan-admin" hidden>Halaman admin</a>
+              <button class="tombol tombol-garis tombol-kecil" type="button" data-keluar>Keluar</button>
+            </div>
+          </div>
+          <div id="daftar-materi"></div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script src="assets/js/pengaturan.js?v=20261005-1"></script>
+  <script src="assets/js/main.js?v=20261005-1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/akun.js?v=20261005-1"></script>
+  <script src="assets/js/kelas.js?v=20261005-1"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Admin Kelas | Napas Pulih</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#008081">
+  <link rel="icon" href="assets/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261005-1">
+</head>
+<body data-halaman="kelas">
+  <div id="header"></div>
+
+  <main>
+    <section class="bagian ruang-kelas">
+      <div class="wadah">
+
+        <div data-keadaan="memuat"><p class="kecil">Memuat…</p></div>
+
+        <div data-keadaan="bukan-admin" hidden>
+          <div class="panel-masuk">
+            <span class="penanda">Admin</span>
+            <h1>Halaman ini khusus admin</h1>
+            <p class="lead">Masuk dulu di halaman Kelas Saya dengan email admin, lalu buka halaman ini lagi.</p>
+            <div class="deret-tombol"><a class="tombol tombol-utama" href="kelas.html">Ke halaman masuk</a></div>
+          </div>
+        </div>
+
+        <div data-keadaan="admin" hidden>
+          <div class="kepala-kelas">
+            <div>
+              <span class="penanda">Admin kelas</span>
+              <h1>Peserta dan materi</h1>
+              <p class="lead">Daftarkan email peserta setelah pembayarannya dikonfirmasi. Peserta langsung bisa masuk dan menonton materi kelasnya.</p>
+            </div>
+            <div class="deret-tombol">
+              <a class="tombol tombol-garis tombol-kecil" href="kelas.html">Lihat sebagai peserta</a>
+              <button class="tombol tombol-garis tombol-kecil" type="button" data-keluar>Keluar</button>
+            </div>
+          </div>
+
+          <div class="tab-admin" role="tablist" aria-label="Bagian admin">
+            <button class="tab" type="button" role="tab" id="tab-peserta" aria-controls="panel-peserta" aria-selected="true">Peserta <span id="jumlah-peserta"></span></button>
+            <button class="tab" type="button" role="tab" id="tab-materi" aria-controls="panel-materi" aria-selected="false">Materi <span id="jumlah-materi"></span></button>
+          </div>
+
+          <!-- ===== PESERTA ===== -->
+          <div class="panel-admin" id="panel-peserta" role="tabpanel" aria-labelledby="tab-peserta">
+            <form class="form kotak-form" id="form-peserta" novalidate>
+              <h2>Daftarkan peserta</h2>
+              <div class="form-baris">
+                <div class="isian"><label for="p-nama">Nama</label><input id="p-nama" autocomplete="off" required></div>
+                <div class="isian"><label for="p-email">Email</label><input id="p-email" type="email" inputmode="email" autocomplete="off" required></div>
+              </div>
+              <div class="form-baris">
+                <div class="isian">
+                  <label for="p-kelas">Kelas</label>
+                  <select id="p-kelas">
+                    <option value="mandiri">Kelas Mandiri</option>
+                    <option value="live">Kelas Live</option>
+                    <option value="lembaga">Untuk Lembaga</option>
+                  </select>
+                </div>
+                <div class="isian"><label for="p-catatan">Catatan (opsional)</label><input id="p-catatan" autocomplete="off" placeholder="Misalnya: batch 1, transfer 5 Okt"></div>
+              </div>
+              <p class="pesan-galat" id="galat-peserta" aria-live="polite"></p>
+              <div class="deret-tombol"><button class="tombol tombol-utama" type="submit">Daftarkan dan aktifkan</button></div>
+            </form>
+
+            <div class="kotak-info" id="info-wa" hidden>
+              <h2>Peserta sudah aktif</h2>
+              <p>Kirim kabar ke peserta lewat WhatsApp. Pesan sudah disiapkan; Anda tinggal memilih kontaknya.</p>
+              <div class="deret-tombol"><a class="tombol tombol-utama" id="tombol-kabar" target="_blank" rel="noopener">Kirim kabar lewat WhatsApp</a></div>
+            </div>
+
+            <div class="isian cari"><label for="cari-peserta">Cari peserta</label><input id="cari-peserta" type="search" placeholder="Nama atau email"></div>
+            <div class="tabel-gulir">
+              <table class="tabel-admin">
+                <thead><tr><th scope="col">Nama</th><th scope="col">Email</th><th scope="col">Kelas</th><th scope="col">Aktif</th><th scope="col">Catatan</th><th scope="col"><span class="tersembunyi">Aksi</span></th></tr></thead>
+                <tbody id="isi-peserta"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ===== MATERI ===== -->
+          <div class="panel-admin" id="panel-materi" role="tabpanel" aria-labelledby="tab-materi" hidden>
+            <form class="form kotak-form" id="form-materi" novalidate>
+              <h2>Tambah materi</h2>
+              <div class="form-baris">
+                <div class="isian">
+                  <label for="m-pekan">Pekan</label>
+                  <select id="m-pekan">
+                    <option value="0">Sebelum mulai</option>
+                    <option value="1" selected>Pekan 1 · Perbaiki Pola Napas</option>
+                    <option value="2">Pekan 2 · Usahakan Gerak Fisik</option>
+                    <option value="3">Pekan 3 · Latih Kesadaran</option>
+                    <option value="4">Pekan 4 · Istirahat Berkualitas</option>
+                    <option value="5">Pekan 5 · Hidrasi, Nutrisi, dan Penyatuan</option>
+                    <option value="6">Setelah program</option>
+                  </select>
+                </div>
+                <div class="isian"><label for="m-urutan">Urutan dalam pekan</label><input id="m-urutan" type="number" min="1" value="1"></div>
+              </div>
+              <div class="isian"><label for="m-judul">Judul</label><input id="m-judul" required placeholder="Misalnya: Video 1.2 Napas yang berlebihan"></div>
+              <div class="form-baris">
+                <div class="isian">
+                  <label for="m-jenis">Jenis</label>
+                  <select id="m-jenis">
+                    <option value="video">Video (YouTube)</option>
+                    <option value="audio">Audio (YouTube)</option>
+                    <option value="dokumen">Dokumen (PDF atau tautan)</option>
+                  </select>
+                </div>
+                <div class="isian"><label for="m-tautan">Tautan</label><input id="m-tautan" required placeholder="https://youtu.be/…"></div>
+              </div>
+              <fieldset class="pilihan-kelas">
+                <legend>Bisa dilihat oleh</legend>
+                <label><input type="checkbox" name="m-kelas" value="mandiri" checked> Kelas Mandiri</label>
+                <label><input type="checkbox" name="m-kelas" value="live" checked> Kelas Live</label>
+                <label><input type="checkbox" name="m-kelas" value="lembaga"> Untuk Lembaga</label>
+              </fieldset>
+              <p class="pesan-galat" id="galat-materi" aria-live="polite"></p>
+              <div class="deret-tombol"><button class="tombol tombol-utama" type="submit">Tambah materi</button></div>
+            </form>
+
+            <div class="tabel-gulir">
+              <table class="tabel-admin">
+                <thead><tr><th scope="col">Pekan</th><th scope="col">No.</th><th scope="col">Judul</th><th scope="col">Jenis</th><th scope="col">Kelas</th><th scope="col"><span class="tersembunyi">Aksi</span></th></tr></thead>
+                <tbody id="isi-materi"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script src="assets/js/pengaturan.js?v=20261005-1"></script>
+  <script src="assets/js/main.js?v=20261005-1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/akun.js?v=20261005-1"></script>
+  <script src="assets/js/admin.js?v=20261005-1"></script>
+</body>
+</html>

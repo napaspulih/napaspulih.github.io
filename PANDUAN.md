@@ -14,6 +14,8 @@ Web Napas Pulih/
 ├── pendampingan.html   ← Pendampingan napas personal
 ├── toko.html           ← Toko (buku & produk)
 ├── tentang.html        ← Profil Dika
+├── kelas.html          ← Kelas Saya (ruang belajar peserta, perlu masuk)
+├── admin.html          ← Admin kelas (daftar peserta & materi, khusus admin)
 ├── PANDUAN.md          ← file ini
 └── assets/
     ├── css/style.css       ← warna, huruf, tata letak
@@ -21,6 +23,9 @@ Web Napas Pulih/
     └── js/
         ├── pengaturan.js   ← ★ NOMOR WA, MEDIA SOSIAL, DAFTAR PRODUK
         ├── main.js         ← menu, keranjang, WhatsApp
+        ├── akun.js         ← sambungan ke database Supabase (login)
+        ├── kelas.js        ← halaman Kelas Saya
+        ├── admin.js        ← halaman Admin kelas
         └── latihan.js      ← mesin latihan napas & tes jeda napas
 ```
 
@@ -111,7 +116,45 @@ Beli domain di Niagahoster, Rumahweb, atau Hostinger (sekitar Rp150–300 ribu p
 
 ---
 
-## 7. Langkah berikutnya yang disarankan
+## 7. Kelas Saya: akses peserta pelatihan
+
+Peserta yang sudah membayar masuk ke **napaspulih.github.io/kelas.html** dengan email (tanpa kata sandi), lalu menonton video dan audio pelatihan yang diunggah di YouTube dengan status **Tidak publik (Unlisted)**. Video hanya tampil untuk email yang Anda daftarkan.
+
+Data peserta dan materi disimpan di Supabase, proyek **napaspulih** (https://supabase.com/dashboard/project/dcekxwhqzbyhfjhgwinc).
+
+### Pengaturan sekali saja (wajib)
+1. Supabase → **Authentication → URL Configuration**:
+   - **Site URL**: `https://napaspulih.github.io/kelas.html`
+   - **Redirect URLs**, tambahkan: `https://napaspulih.github.io/**`
+   Tanpa ini, tautan masuk di email akan mengarah ke alamat yang salah.
+2. Supabase → **Authentication → Emails → SMTP Settings**: sambungkan layanan email sendiri (misalnya Brevo atau Resend, keduanya punya paket gratis). Layanan email bawaan Supabase hanya untuk uji coba dan dibatasi beberapa email per jam, jadi tidak cukup untuk peserta sungguhan.
+3. (Disarankan) Supabase → **Authentication → Emails → Templates → Magic Link**: ganti ke bahasa Indonesia, misalnya:
+   - Subjek: `Tautan masuk Kelas Napas Pulih`
+   - Isi: `<p>Assalamu'alaikum,</p><p>Klik tautan berikut untuk masuk ke Kelas Saya:</p><p><a href="{{ .ConfirmationURL }}">Masuk ke Kelas Napas Pulih</a></p><p>Tautan ini hanya berlaku sekali dan untuk waktu singkat. Abaikan email ini bila Anda tidak memintanya.</p>`
+
+### Admin
+- Email admin: `dikaduwiyanto@gmail.com`. Masuk di halaman Kelas Saya dengan email ini, lalu klik **Halaman admin** (atau buka `admin.html`).
+- Menambah admin lain: Supabase → **Table Editor → admin** → Insert row, isi email-nya (huruf kecil).
+
+### Alur setiap ada peserta baru
+1. Peserta transfer dan mengirim bukti lewat WhatsApp.
+2. Buka **admin.html → Peserta**, isi nama, email, dan kelas, lalu klik **Daftarkan dan aktifkan**.
+3. Klik **Kirim kabar lewat WhatsApp**. Pesan berisi cara masuk sudah disiapkan.
+4. Peserta membuka kelas.html, mengetik email, lalu membuka tautan masuk di emailnya.
+
+Menonaktifkan peserta: matikan sakelar **Aktif**. Peserta yang dinonaktifkan langsung tidak bisa melihat materi lagi.
+
+### Menambah video
+1. Di YouTube Studio, unggah video dengan visibilitas **Tidak publik**. Pastikan **Izinkan penyematan** (Allow embedding) aktif.
+2. Salin tautannya (tombol **Bagikan**).
+3. Buka **admin.html → Materi**, pilih pekan, isi judul, tempel tautan, pilih kelas yang boleh melihat, lalu klik **Tambah materi**.
+4. Untuk lembar latihan atau jurnal, pilih jenis **Dokumen** dan tempel tautan PDF (misalnya dari Google Drive yang dibagikan "Siapa saja yang memiliki link").
+
+**Catatan:** tautan video Tidak publik tetap bisa dibuka siapa pun yang memegang tautannya. Sistem ini menyembunyikan tautan dari orang yang tidak terdaftar, tetapi tidak bisa mencegah peserta membagikannya.
+
+---
+
+## 8. Langkah berikutnya yang disarankan
 
 - Tambahkan **testimoni asli** peserta (beserta izin mereka) di beranda.
 - Tambahkan halaman **Artikel** untuk tulisan Anda.
