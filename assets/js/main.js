@@ -131,6 +131,7 @@ function pasangFooter() {
         <div>
           <h4>Toko</h4>
           <ul>
+            <li><a href="toko.html#ebook">E-book</a></li>
             <li><a href="toko.html#buku">Buku</a></li>
             <li><a href="toko.html#alat">Alat bantu napas</a></li>
             <li><a href="toko.html#digital">Produk digital</a></li>
@@ -199,7 +200,8 @@ function pasangFormWA() {
 /* =========================================================
    PRODUK & KERANJANG
    ========================================================= */
-const NAMA_KATEGORI = { buku: "Buku", alat: "Alat bantu napas", digital: "Produk digital" };
+const NAMA_KATEGORI = { ebook: "E-book", buku: "Buku", alat: "Alat bantu napas", digital: "Produk digital" };
+const KATEGORI_DIGITAL = ["ebook", "digital"];
 const NAMA_STATUS = { preorder: "Pre-order", habis: "Stok habis" };
 
 function terang(hex) {
@@ -231,7 +233,7 @@ function kartuProdukHTML(p) {
   return `<article class="produk" data-kategori="${p.kategori}">
     <div class="produk-sampul">${sampulHTML(p)}${status ? `<span class="produk-status">${status}</span>` : ""}</div>
     <div class="produk-info">
-      <span class="produk-kategori">${NAMA_KATEGORI[p.kategori] || ""}</span>
+      <span class="produk-kategori">${p.detail || NAMA_KATEGORI[p.kategori] || ""}</span>
       <h3>${p.nama}</h3>
     </div>
     <p class="produk-desk">${p.deskripsi}</p>
@@ -268,7 +270,7 @@ const Keranjang = {
   },
   jumlah() { return this.isi.reduce((s, b) => s + b.qty, 0); },
   total() { return this.isi.reduce((s, b) => s + b.qty * PRODUK.find((p) => p.id === b.id).harga, 0); },
-  perluAlamat() { return this.isi.some((b) => PRODUK.find((p) => p.id === b.id).kategori !== "digital"); },
+  perluAlamat() { return this.isi.some((b) => !KATEGORI_DIGITAL.includes(PRODUK.find((p) => p.id === b.id).kategori)); },
 
   pasang() {
     document.body.insertAdjacentHTML("beforeend", `
@@ -319,7 +321,7 @@ const Keranjang = {
     const alamat = this.perluAlamat();
     kaki.innerHTML = `
       <div class="total"><span>Total</span><span>${rupiah(this.total())}</span></div>
-      <p class="kecil">Belum termasuk ongkos kirim. Admin akan mengonfirmasi total dan cara pembayaran lewat WhatsApp.</p>
+      <p class="kecil">${alamat ? "Belum termasuk ongkos kirim. " : ""}Admin akan mengonfirmasi total dan cara pembayaran lewat WhatsApp.${this.isi.some((b) => KATEGORI_DIGITAL.includes(PRODUK.find((p) => p.id === b.id).kategori)) ? " E-book dan produk digital dikirim lewat WhatsApp setelah pembayaran dikonfirmasi." : ""}</p>
       <form class="form" id="form-pesanan" novalidate>
         <div class="isian"><label for="psn-nama">Nama</label><input id="psn-nama" autocomplete="name" required></div>
         ${alamat ? `<div class="isian"><label for="psn-alamat">Alamat pengiriman</label><textarea id="psn-alamat" autocomplete="street-address" required placeholder="Jalan, kecamatan, kota, kode pos"></textarea></div>` : ""}
@@ -338,7 +340,7 @@ const Keranjang = {
         const p = PRODUK.find((x) => x.id === b.id);
         return `• ${p.nama} x${b.qty} = ${rupiah(p.harga * b.qty)}${p.status === "preorder" ? " (pre-order)" : ""}`;
       }).join("\n");
-      const pesan = `Halo Napas Pulih, saya ingin memesan:\n\n${daftar}\n\nTotal: ${rupiah(this.total())} (belum ongkir)\n\nNama: ${nama}${alEl ? `\nAlamat: ${alEl.value.trim()}` : ""}`;
+      const pesan = `Halo Napas Pulih, saya ingin memesan:\n\n${daftar}\n\nTotal: ${rupiah(this.total())}${alEl ? " (belum ongkir)" : ""}\n\nNama: ${nama}${alEl ? `\nAlamat: ${alEl.value.trim()}` : ""}`;
       bukaWA(pesan, kaki.querySelector(".cadangan-wa"));
     });
   },

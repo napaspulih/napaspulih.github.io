@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="assets/css/style.css?v=20261005-1">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261005-2">
 </head>
 <body data-halaman="toko">
   <div id="header"></div>
@@ -28,6 +28,7 @@
       <div class="wadah">
         <div class="filter" role="group" aria-label="Saring kategori">
           <button class="chip" type="button" data-saring="semua" aria-pressed="true">Semua</button>
+          <button class="chip" type="button" data-saring="ebook" aria-pressed="false">E-book</button>
           <button class="chip" type="button" data-saring="buku" aria-pressed="false">Buku</button>
           <button class="chip" type="button" data-saring="alat" aria-pressed="false">Alat bantu napas</button>
           <button class="chip" type="button" data-saring="digital" aria-pressed="false">Produk digital</button>
@@ -58,8 +59,8 @@
 
   <div id="footer"></div>
 
-  <script src="assets/js/pengaturan.js?v=20261005-1"></script>
-  <script src="assets/js/main.js?v=20261005-1"></script>
+  <script src="assets/js/pengaturan.js?v=20261005-2"></script>
+  <script src="assets/js/main.js?v=20261005-2"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const grid = document.getElementById("grid-toko");
@@ -70,10 +71,10 @@
       }
       chips.forEach((c) => c.addEventListener("click", () => saring(c.dataset.saring)));
       const awal = location.hash.replace("#", "");
-      saring(["buku", "alat", "digital"].includes(awal) ? awal : "semua");
+      saring(["ebook", "buku", "alat", "digital"].includes(awal) ? awal : "semua");
       window.addEventListener("hashchange", () => {
         const k = location.hash.replace("#", "");
-        if (["buku", "alat", "digital"].includes(k)) saring(k);
+        if (["ebook", "buku", "alat", "digital"].includes(k)) saring(k);
       });
     });
   </script>
