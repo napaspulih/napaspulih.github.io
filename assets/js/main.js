@@ -148,7 +148,6 @@ function pasangFooter() {
       </div>
       <div class="footer-bawah">
         <span>© ${tahun} Napas Pulih · Dika Duwiyanto</span>
-        <span>Hentikan latihan bila pusing atau tidak nyaman.</span>
       </div>
     </div>
   </footer>`;

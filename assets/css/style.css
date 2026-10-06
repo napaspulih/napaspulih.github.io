@@ -496,6 +496,14 @@ p { margin: 0; }
 .info-teknik h4 { margin-bottom: 6px; }
 .info-teknik p { font-size: .95rem; color: var(--redup); }
 
+.peringatan-latihan {
+  display: flex; align-items: center; gap: 12px; margin: 0;
+  background: var(--anyaman-muda); color: var(--hutan);
+  border-radius: var(--radius); padding: 14px 18px;
+  font-weight: 600; font-size: 1rem; line-height: 1.4;
+}
+.peringatan-latihan svg { width: 22px; height: 22px; flex: none; color: #A9761C; }
+
 /* Tes Jeda Napas */
 .tes-tata { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
 .tes-tata > * { min-width: 0; }
