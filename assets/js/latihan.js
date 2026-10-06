@@ -85,7 +85,7 @@ const UCAPAN_FASE = ["Tarik", "Tahan", "Buang", "Tahan"];
   let menitDipilih = 3;
   let status = "siap"; // siap | bersiap | jalan | jeda | selesai
   let waktuMulai = 0, waktuJeda = 0, totalJeda = 0, faseTerakhir = -1, hitungTerakhir = -1;
-  let rafId = 0, kunciLayar = null, audioCtx = null;
+  let rafId = 0, kunciLayar = null;
 
   /* ----- Daftar teknik ----- */
   el.daftar.innerHTML = TEKNIK.map((t) => `
@@ -164,19 +164,87 @@ const UCAPAN_FASE = ["Tarik", "Tahan", "Buang", "Tahan"];
     el.selesai.hidden = true;
   }
 
-  /* ----- Suara ----- */
-  function nada(frek, lama) {
+  /* ----- Suara: lonceng / mangkuk meditasi (singing bowl) -----
+     Disintesis langsung di browser, tanpa file audio.
+     Tarik = mangkuk nada tinggi (C5), Buang = mangkuk nada rendah (G4),
+     Tahan = denting kecil yang lembut, Selesai = tiga pukulan berurutan. */
+  const Lonceng = (() => {
+    let ctx = null, master = null, suaraAktif = [];
+    // [rasio frekuensi, kekuatan relatif, panjang gema relatif]
+    const MANGKUK = [[1, 1, 1], [2.71, 0.5, 0.75], [5.15, 0.25, 0.45], [8.4, 0.1, 0.3]];
+    const DENTING = [[1, 1, 1], [2.76, 0.3, 0.5], [5.4, 0.12, 0.3]];
+
+    function ruangGema(c, detik, redam) {
+      const n = Math.floor(c.sampleRate * detik), b = c.createBuffer(2, n, c.sampleRate);
+      for (let k = 0; k < 2; k++) {
+        const d = b.getChannelData(k);
+        for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, redam);
+      }
+      return b;
+    }
+    function siapkan() {
+      if (ctx) { if (ctx.state === "suspended" && ctx.resume) ctx.resume().catch(() => {}); return ctx; }
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      ctx = new AC();
+      const kompres = ctx.createDynamicsCompressor();
+      kompres.threshold.value = -12; kompres.ratio.value = 4; kompres.attack.value = 0.003; kompres.release.value = 0.3;
+      master = ctx.createGain(); master.gain.value = 0.9;
+      const gema = ctx.createConvolver(); gema.buffer = ruangGema(ctx, 3, 2.4);
+      const basah = ctx.createGain(); basah.gain.value = 0.3;
+      master.connect(kompres);
+      master.connect(gema); gema.connect(basah); basah.connect(kompres);
+      kompres.connect(ctx.destination);
+      return ctx;
+    }
+    function pukul(frek, { keras = 0.6, lama = 4, jenis = "mangkuk", potong = true, tunda = 0 } = {}) {
+      const c = siapkan(); if (!c) return;
+      const t = c.currentTime + 0.02 + tunda;
+      if (potong) {
+        // pudarkan lonceng sebelumnya agar tidak menumpuk
+        suaraAktif.forEach((g) => { try { g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(g.gain.value, t); g.gain.linearRampToValueAtTime(0.0001, t + 0.4); } catch (e) {} });
+        suaraAktif = [];
+      }
+      const bus = c.createGain(); bus.connect(master); suaraAktif.push(bus);
+      (jenis === "denting" ? DENTING : MANGKUK).forEach(([rasio, kuat, gema]) => {
+        [0, 1].forEach((kembar) => {
+          // dua nada yang sedikit berbeda menghasilkan dengung khas mangkuk
+          const o = c.createOscillator(), g = c.createGain();
+          o.type = "sine";
+          o.frequency.value = frek * rasio * (kembar ? 1.0035 : 1);
+          const puncak = keras * kuat * (kembar ? 0.45 : 1) * 0.5;
+          g.gain.setValueAtTime(0.0001, t);
+          g.gain.exponentialRampToValueAtTime(puncak, t + 0.008);
+          g.gain.exponentialRampToValueAtTime(0.0001, t + lama * gema);
+          o.connect(g).connect(bus);
+          o.start(t); o.stop(t + lama * gema + 0.1);
+        });
+      });
+      // bunyi "tok" pemukul yang sangat singkat
+      const n = Math.floor(c.sampleRate * 0.025), buf = c.createBuffer(1, n, c.sampleRate), d = buf.getChannelData(0);
+      for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+      const src = c.createBufferSource(), saring = c.createBiquadFilter(), gt = c.createGain();
+      src.buffer = buf; saring.type = "bandpass"; saring.frequency.value = frek * 4; saring.Q.value = 2;
+      gt.gain.value = keras * 0.25;
+      src.connect(saring).connect(gt).connect(bus); src.start(t);
+    }
+    return { siapkan, pukul };
+  })();
+
+  const BUNYI = {
+    tarik: () => Lonceng.pukul(523.25, { keras: 0.65, lama: 4.5 }),
+    buang: () => Lonceng.pukul(392.0, { keras: 0.7, lama: 5 }),
+    tahan: () => Lonceng.pukul(1046.5, { keras: 0.3, lama: 1.6, jenis: "denting", potong: false }),
+    bersiap: () => Lonceng.pukul(784.0, { keras: 0.35, lama: 2, jenis: "denting" }),
+    selesai: () => {
+      Lonceng.pukul(392.0, { keras: 0.6, lama: 5 });
+      Lonceng.pukul(523.25, { keras: 0.6, lama: 5, potong: false, tunda: 1.1 });
+      Lonceng.pukul(784.0, { keras: 0.55, lama: 6, potong: false, tunda: 2.2 });
+    },
+  };
+  function bunyi(jenis) {
     if (!el.suara.checked) return;
-    try {
-      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-      const o = audioCtx.createOscillator(), g = audioCtx.createGain();
-      o.type = "sine"; o.frequency.value = frek;
-      g.gain.setValueAtTime(0, audioCtx.currentTime);
-      g.gain.linearRampToValueAtTime(0.12, audioCtx.currentTime + 0.05);
-      g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + lama);
-      o.connect(g).connect(audioCtx.destination);
-      o.start(); o.stop(audioCtx.currentTime + lama + 0.05);
-    } catch (e) { /* abaikan */ }
+    try { BUNYI[jenis](); } catch (e) { /* abaikan */ }
   }
   function ucap(teks) {
     if (!el.panduan.checked || !("speechSynthesis" in window)) return;
@@ -189,7 +257,14 @@ const UCAPAN_FASE = ["Tarik", "Tahan", "Buang", "Tahan"];
       speechSynthesis.speak(u);
     } catch (e) { /* abaikan */ }
   }
-  const FREK = [528, 440, 396, 440];
+  const BUNYI_FASE = ["tarik", "tahan", "buang", "tahan"];
+
+  const tombolContoh = document.getElementById("contoh-nada");
+  if (tombolContoh) tombolContoh.addEventListener("click", () => {
+    Lonceng.siapkan();
+    Lonceng.pukul(523.25, { keras: 0.65, lama: 4.5 });
+    Lonceng.pukul(392.0, { keras: 0.7, lama: 5, potong: false, tunda: 1.6 });
+  });
 
   /* ----- Kontrol ----- */
   el.mulai.addEventListener("click", () => {
@@ -205,7 +280,7 @@ const UCAPAN_FASE = ["Tarik", "Tahan", "Buang", "Tahan"];
   function lepasLayar() { try { kunciLayar && kunciLayar.release(); } catch (e) {} kunciLayar = null; }
 
   function mulaiSesi() {
-    if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+    if (el.suara.checked) Lonceng.siapkan();
     status = "bersiap";
     el.selesai.hidden = true;
     totalJeda = 0; faseTerakhir = -1; hitungTerakhir = -1;
@@ -213,7 +288,7 @@ const UCAPAN_FASE = ["Tarik", "Tahan", "Buang", "Tahan"];
     el.mulai.textContent = "Jeda";
     el.henti.hidden = false;
     pegangLayar();
-    nada(660, 0.15);
+    bunyi("bersiap");
     ucap("Bersiap");
     cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(langkah);
@@ -254,7 +329,7 @@ const UCAPAN_FASE = ["Tarik", "Tahan", "Buang", "Tahan"];
     el.putaran.textContent = `${jumlahPutaran()} / ${jumlahPutaran()}`;
     el.selesai.hidden = false;
     lepasLayar();
-    nada(528, 0.6); setTimeout(() => nada(660, 0.8), 350);
+    bunyi("selesai");
     ucap("Selesai. Bernapaslah seperti biasa.");
   }
 
@@ -292,7 +367,7 @@ const UCAPAN_FASE = ["Tarik", "Tahan", "Buang", "Tahan"];
     if (kunci !== faseTerakhir) {
       faseTerakhir = kunci;
       el.fase.textContent = NAMA_FASE[fase.i];
-      nada(FREK[fase.i], fase.i % 2 ? 0.25 : 0.5);
+      bunyi(BUNYI_FASE[fase.i]);
       ucap(UCAPAN_FASE[fase.i]);
     }
     el.hitung.textContent = Math.ceil(fase.d - (dalam - acc));
