@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="assets/css/style.css?v=20261006-6">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261006-7">
 </head>
 <body data-halaman="latihan">
   <div id="header"></div>
@@ -99,16 +99,20 @@
     </section>
 
     <!-- ===== PENJELASAN TEKNIK ===== -->
-    <section class="bagian bagian-putih studio-info">
-      <div class="wadah">
-        <div class="kepala-bagian" style="margin-bottom:28px">
+    <section class="studio-info" aria-labelledby="info-judul">
+      <div class="wadah studio-info-isi">
+        <div class="info-kepala">
           <span class="penanda">Tentang teknik yang dipilih</span>
+          <h2 id="info-judul">Napas Tenang</h2>
+          <p class="info-pola" id="info-pola"></p>
+          <div class="ritme" id="info-ritme" aria-hidden="true"></div>
+          <p class="kecil" id="info-per-menit"></p>
         </div>
-        <div class="info-teknik">
-          <div><h4>Manfaat</h4><p id="info-manfaat"></p></div>
-          <div><h4>Cara melakukan</h4><p id="info-cara"></p></div>
-          <div><h4>Kapan dipakai</h4><p id="info-kapan"></p></div>
-        </div>
+        <dl class="info-daftar">
+          <div><dt>Manfaat</dt><dd id="info-manfaat"></dd></div>
+          <div><dt>Cara melakukan</dt><dd id="info-cara"></dd></div>
+          <div><dt>Kapan dipakai</dt><dd id="info-kapan"></dd></div>
+        </dl>
       </div>
     </section>
 
@@ -167,8 +171,8 @@
 
   <div id="footer"></div>
 
-  <script src="assets/js/pengaturan.js?v=20261006-6"></script>
-  <script src="assets/js/main.js?v=20261006-6"></script>
-  <script src="assets/js/latihan.js?v=20261006-6"></script>
+  <script src="assets/js/pengaturan.js?v=20261006-7"></script>
+  <script src="assets/js/main.js?v=20261006-7"></script>
+  <script src="assets/js/latihan.js?v=20261006-7"></script>
 </body>
 </html>

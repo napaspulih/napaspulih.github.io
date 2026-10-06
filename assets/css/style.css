@@ -618,6 +618,31 @@ p { margin: 0; }
   .studio-tata:has(#atur-kustom:not([hidden])) .orb-wadah { width: clamp(110px, min(60vw, calc(100dvh - 530px)), 340px); }
 }
 
+
+/* Penjelasan teknik di bawah alat latihan */
+.studio-info { background: var(--kertas); border-top: 1px solid var(--garis); padding-block: clamp(36px, 4.5vw, 60px); }
+.studio-info-isi { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 72px); align-items: center; }
+.info-kepala { display: grid; gap: 10px; align-content: start; }
+.info-kepala h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); }
+.info-pola { color: var(--redup); }
+.ritme { display: flex; gap: 4px; height: 48px; margin-top: 8px; }
+.ritme span {
+  flex-basis: 0; min-width: 0; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  gap: 4px; padding: 0 6px; font-size: .8rem; white-space: nowrap; overflow: hidden; font-variant-numeric: tabular-nums;
+}
+.ritme b { font-weight: 700; }
+.ritme .tarik { background: var(--teal); color: #fff; }
+.ritme .buang { background: #A8D5D2; color: var(--hutan); }
+.ritme .tahan { background: var(--anyaman-muda); color: var(--hutan); border: 1.5px dashed var(--anyaman); }
+.info-daftar { margin: 0; display: grid; border-top: 1px solid var(--garis); }
+.info-daftar > div { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--garis); }
+.info-daftar dt { font-weight: 700; }
+.info-daftar dd { margin: 0; color: var(--redup); }
+@media (max-width: 860px) {
+  .studio-info-isi { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .info-daftar > div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+}
+
 /* ---------- Diagram PULIH ---------- */
 .diagram-pulih { width: 100%; max-width: 440px; margin-inline: auto; }
 .diagram-pulih text { font-family: var(--f-teks); }

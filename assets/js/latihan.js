@@ -72,7 +72,7 @@ const UCAPAN_FASE = ["Tarik", "Tahan", "Buang", "Tahan"];
     durasi: $("#pilih-durasi"), suara: $("#suara"), panduan: $("#panduan-suara"),
     kustom: $("#atur-kustom"), sisa: $("#sisa-waktu"), putaran: $("#putaran"),
     mulai: $("#tombol-mulai"), henti: $("#tombol-henti"), selesai: $("#pesan-selesai"),
-    manfaat: $("#info-manfaat"), cara: $("#info-cara"), kapan: $("#info-kapan"),
+    manfaat: $("#info-manfaat"), infoJudul: $("#info-judul"), infoPola: $("#info-pola"), infoMenit: $("#info-per-menit"), ritme: $("#info-ritme"), cara: $("#info-cara"), kapan: $("#info-kapan"),
   };
   if (!el.orb) return;
 
@@ -117,10 +117,24 @@ const UCAPAN_FASE = ["Tarik", "Tahan", "Buang", "Tahan"];
     el.manfaat.textContent = teknik.manfaat;
     el.cara.textContent = teknik.cara;
     el.kapan.textContent = teknik.kapan;
+    perbaruiInfo();
     el.kustom.hidden = teknik.id !== "kustom";
     if (teknik.id === "kustom") isiKustom();
     perbaruiStatusAwal();
     simpan.taruh("napaspulih-teknik", teknik.id);
+  }
+
+  /* ----- Penjelasan teknik + diagram ritme ----- */
+  function perbaruiInfo() {
+    const p = teknik.pola, total = p.reduce((a, b) => a + b, 0);
+    const f = (n) => String(n).replace(".", ",");
+    if (el.infoJudul) el.infoJudul.textContent = teknik.nama;
+    if (el.infoPola) el.infoPola.textContent = polaTeks(p);
+    if (el.infoMenit) el.infoMenit.textContent = `Sekitar ${f(Math.round(600 / total) / 10)} napas per menit`;
+    if (el.ritme) {
+      const kelas = ["tarik", "tahan", "buang", "tahan"], label = ["Tarik", "Tahan", "Buang", "Tahan"];
+      el.ritme.innerHTML = p.map((d, i) => d > 0 ? `<span class="${kelas[i]}" style="flex-grow:${d}"><b>${label[i]}</b> ${f(d)} dtk</span>` : "").join("");
+    }
   }
 
   /* ----- Pola kustom ----- */
@@ -132,6 +146,9 @@ const UCAPAN_FASE = ["Tarik", "Tahan", "Buang", "Tahan"];
     if (v > 30) v = 30;
     if ((i === 0 || i === 2) && v < 1) v = 1;
     TEKNIK.find((t) => t.id === "kustom").pola[i] = v;
+    const tombolKustom = el.daftar.querySelector('.teknik[data-id="kustom"] .pola');
+    if (tombolKustom) tombolKustom.textContent = polaTeks(teknik.pola);
+    perbaruiInfo();
     if (status !== "siap") hentikan();
     perbaruiStatusAwal();
   }));
