@@ -259,13 +259,6 @@ const UCAPAN_FASE = ["Tarik", "Tahan", "Buang", "Tahan"];
   }
   const BUNYI_FASE = ["tarik", "tahan", "buang", "tahan"];
 
-  const tombolContoh = document.getElementById("contoh-nada");
-  if (tombolContoh) tombolContoh.addEventListener("click", () => {
-    Lonceng.siapkan();
-    Lonceng.pukul(523.25, { keras: 0.65, lama: 4.5 });
-    Lonceng.pukul(392.0, { keras: 0.7, lama: 5, potong: false, tunda: 1.6 });
-  });
-
   /* ----- Kontrol ----- */
   el.mulai.addEventListener("click", () => {
     if (status === "siap" || status === "selesai") mulaiSesi();
