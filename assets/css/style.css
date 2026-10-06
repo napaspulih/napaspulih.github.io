@@ -523,6 +523,101 @@ p { margin: 0; }
 .riwayat ul { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 4px; }
 .riwayat li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed var(--garis); font-variant-numeric: tabular-nums; }
 
+
+/* =========================================================
+   LATIHAN NAPAS — tata letak satu layar ("studio")
+   Seluruh alat latihan muat dalam satu layar tanpa digeser.
+   ========================================================= */
+.studio {
+  --tinggi-header: 76px;
+  min-height: calc(100vh - var(--tinggi-header));
+  min-height: calc(100dvh - var(--tinggi-header));
+  display: flex; align-items: center;
+  padding-block: clamp(10px, 2vh, 28px);
+}
+.studio-isi { display: flex; flex-direction: column; gap: clamp(10px, 1.8vh, 20px); }
+.studio-kepala { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 28px; }
+.studio-kepala h1 { font-size: clamp(1.5rem, 2.6vw, 2.2rem); font-weight: 400; letter-spacing: -0.02em; }
+.studio-kepala p { color: var(--redup); font-size: .95rem; max-width: 62ch; }
+
+.studio-tata {
+  display: grid; grid-template-columns: 230px minmax(0, 1fr) 300px;
+  gap: clamp(16px, 2.4vw, 32px); align-items: center;
+  background: var(--kertas); border: 1px solid var(--garis); border-radius: var(--radius-besar);
+  padding: clamp(12px, 2.2vh, 26px) clamp(16px, 2.4vw, 28px);
+}
+.studio-tata > * { min-width: 0; }
+.studio-label { display: block; font-size: .85rem; font-weight: 700; color: var(--redup); margin-bottom: 8px; }
+.studio .daftar-teknik { display: grid; gap: 6px; }
+.studio .teknik { padding: 8px 14px; border-radius: 14px; gap: 1px; }
+.studio .teknik strong { font-size: .95rem; }
+.studio .teknik .pola { font-size: .78rem; }
+
+.studio-orb { display: grid; place-items: center; }
+.studio .orb-wadah { width: min(100%, 440px, calc(100vh - 280px)); width: min(100%, 440px, calc(100dvh - 280px)); min-width: 220px; }
+
+.studio-panel { display: flex; flex-direction: column; gap: clamp(8px, 1.6vh, 14px); }
+.studio-judul h2 { font-size: 1.5rem; }
+.studio-judul p { color: var(--redup); font-size: .9rem; margin-top: 2px; }
+.studio .status-sesi { gap: 24px; }
+.studio .status-sesi strong { font-size: 1.25rem; }
+.studio .segmen { display: flex; flex-wrap: nowrap; width: 100%; }
+.studio .segmen button { flex: 1; padding: 7px 4px; font-size: .85rem; white-space: nowrap; }
+.studio-saklar { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.studio-saklar .saklar { font-size: .88rem; }
+.studio-tombol .tombol { flex: 1; }
+.studio .peringatan-latihan { padding: 9px 14px; font-size: .9rem; gap: 10px; }
+.studio .peringatan-latihan svg { width: 20px; height: 20px; }
+.studio .atur-kustom { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.studio .atur-kustom .isian { gap: 2px; }
+.studio .atur-kustom .isian label { font-size: .78rem; }
+.studio .atur-kustom .isian input { padding: 7px 4px; }
+.studio-selesai { padding: 10px 14px; font-size: .88rem; gap: 2px; }
+
+/* Layar laptop yang sangat pendek */
+@media (min-width: 861px) and (max-height: 680px) {
+  .studio .teknik .pola { display: none; }
+  .studio .orb-wadah { min-width: 200px; }
+}
+/* Layar laptop yang pendek (mis. 1366x768 dengan bilah browser) */
+@media (min-width: 861px) and (max-height: 800px) {
+  .studio-judul p, .studio .kontrol-grup > span { display: none; }
+  .studio .teknik .pola { font-size: .74rem; }
+  .studio .teknik { padding: 7px 12px; }
+}
+
+@media (max-width: 1100px) {
+  .studio-tata { grid-template-columns: 200px minmax(0, 1fr) 270px; }
+}
+
+/* Tablet tegak & HP: satu kolom, teknik jadi deretan geser */
+@media (max-width: 860px) {
+  .studio { align-items: flex-start; padding-block: 10px; }
+  .studio-isi { gap: 10px; }
+  .studio-kepala h1 { font-size: 1.35rem; }
+  .studio-kepala p { display: none; }
+  .studio-tata { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 10px; border-radius: var(--radius); }
+  .studio-label, .studio-judul, .studio .kontrol-grup > span { display: none; }
+  .studio .daftar-teknik {
+    display: flex; gap: 6px; overflow-x: auto; scroll-snap-type: x proximity;
+    margin-inline: -10px; padding: 2px 10px 2px; scrollbar-width: none;
+  }
+  .studio .daftar-teknik::-webkit-scrollbar { display: none; }
+  .studio .teknik { flex: none; scroll-snap-align: start; padding: 7px 14px; border-radius: 999px; }
+  .studio .teknik strong { font-size: .9rem; }
+  .studio .teknik .pola { display: none; }
+  .studio .orb-wadah { width: clamp(120px, min(68vw, calc(100vh - 468px)), 380px); width: clamp(120px, min(68vw, calc(100dvh - 468px)), 380px); min-width: 0; }
+  .studio-panel { gap: 8px; }
+  .studio .status-sesi { justify-content: center; gap: 18px; font-size: .85rem; }
+  .studio .status-sesi strong { display: inline; font-size: 1rem; margin-left: 6px; }
+  .studio .segmen button { padding: 7px 4px; }
+  .studio-saklar { justify-content: center; gap: 6px 18px; }
+  .studio .tombol { padding-block: 12px; }
+  .studio .peringatan-latihan { font-size: .82rem; padding: 8px 12px; }
+  /* saat pola "Atur Sendiri" dibuka, lingkaran mengecil agar tetap muat */
+  .studio-tata:has(#atur-kustom:not([hidden])) .orb-wadah { width: clamp(110px, min(60vw, calc(100dvh - 530px)), 340px); }
+}
+
 /* ---------- Diagram PULIH ---------- */
 .diagram-pulih { width: 100%; max-width: 440px; margin-inline: auto; }
 .diagram-pulih text { font-family: var(--f-teks); }

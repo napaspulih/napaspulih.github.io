@@ -10,58 +10,57 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="assets/css/style.css?v=20261006-4">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261006-6">
 </head>
 <body data-halaman="latihan">
   <div id="header"></div>
 
   <main>
-    <section class="hero-dalam">
-      <div class="wadah">
-        <span class="penanda">Latihan napas</span>
-        <h1>Latihan napas berpandu</h1>
-        <p class="lead">Pilih teknik, atur durasi, lalu ikuti lingkaran. Tarik napas saat lingkaran membesar dan hembuskan saat mengecil. Bernapaslah lewat hidung, pelan dan ringan.</p>
-      </div>
-    </section>
-
-    <section class="bagian" style="padding-top:0">
-      <div class="wadah latihan-tata">
-        <div>
-          <h2 class="kecil" style="font-family:var(--f-teks);font-size:.95rem;font-weight:700;color:var(--tinta);margin-bottom:12px">Pilih teknik</h2>
-          <div class="daftar-teknik" id="daftar-teknik"></div>
+    <!-- ===== LATIHAN NAPAS (muat satu layar) ===== -->
+    <section class="studio" aria-labelledby="judul-latihan">
+      <div class="wadah studio-isi">
+        <div class="studio-kepala">
+          <h1 id="judul-latihan">Latihan napas berpandu</h1>
+          <p>Tarik napas saat lingkaran membesar, hembuskan saat mengecil. Lewat hidung, pelan dan ringan.</p>
         </div>
 
-        <div class="panggung">
-          <div class="panggung-kepala">
-            <div>
+        <div class="studio-tata">
+          <div class="studio-teknik">
+            <span class="studio-label" id="label-teknik">Pilih teknik</span>
+            <div class="daftar-teknik" id="daftar-teknik" role="group" aria-labelledby="label-teknik"></div>
+          </div>
+
+          <div class="studio-orb">
+            <div class="orb-wadah">
+              <span class="orb-cincin"></span>
+              <span class="orb-cincin dalam"></span>
+              <span class="orb" id="orb"></span>
+              <svg class="orb-progres" viewBox="0 0 100 100" aria-hidden="true"><circle class="jalur" cx="50" cy="50" r="49"/><circle class="isi" id="orb-progres-isi" cx="50" cy="50" r="49"/></svg>
+              <div class="orb-teks" aria-live="polite">
+                <span class="orb-fase" id="orb-fase">Siap</span>
+                <span class="orb-hitung" id="orb-hitung"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="studio-panel">
+            <div class="studio-judul">
               <h2 id="teknik-judul">Napas Tenang</h2>
               <p id="teknik-ringkas"></p>
             </div>
+
             <div class="status-sesi" aria-live="off">
               <div>Sisa waktu<strong id="sisa-waktu">3:00</strong></div>
               <div>Putaran<strong id="putaran">0 / 16</strong></div>
             </div>
-          </div>
 
-          <div class="orb-wadah">
-            <span class="orb-cincin"></span>
-            <span class="orb-cincin dalam"></span>
-            <span class="orb" id="orb"></span>
-            <svg class="orb-progres" viewBox="0 0 100 100" aria-hidden="true"><circle class="jalur" cx="50" cy="50" r="49"/><circle class="isi" id="orb-progres-isi" cx="50" cy="50" r="49"/></svg>
-            <div class="orb-teks" aria-live="polite">
-              <span class="orb-fase" id="orb-fase">Siap</span>
-              <span class="orb-hitung" id="orb-hitung"></span>
+            <div class="atur-kustom" id="atur-kustom" hidden>
+              <div class="isian"><label for="k-tarik">Tarik</label><input id="k-tarik" type="number" min="1" max="30" step="0.5" inputmode="decimal"></div>
+              <div class="isian"><label for="k-tahan1">Tahan</label><input id="k-tahan1" type="number" min="0" max="30" step="0.5" inputmode="decimal"></div>
+              <div class="isian"><label for="k-buang">Buang</label><input id="k-buang" type="number" min="1" max="30" step="0.5" inputmode="decimal"></div>
+              <div class="isian"><label for="k-tahan2">Tahan</label><input id="k-tahan2" type="number" min="0" max="30" step="0.5" inputmode="decimal"></div>
             </div>
-          </div>
 
-          <div class="atur-kustom" id="atur-kustom" hidden>
-            <div class="isian"><label for="k-tarik">Tarik (detik)</label><input id="k-tarik" type="number" min="1" max="30" step="0.5" inputmode="decimal"></div>
-            <div class="isian"><label for="k-tahan1">Tahan</label><input id="k-tahan1" type="number" min="0" max="30" step="0.5" inputmode="decimal"></div>
-            <div class="isian"><label for="k-buang">Buang</label><input id="k-buang" type="number" min="1" max="30" step="0.5" inputmode="decimal"></div>
-            <div class="isian"><label for="k-tahan2">Tahan</label><input id="k-tahan2" type="number" min="0" max="30" step="0.5" inputmode="decimal"></div>
-          </div>
-
-          <div class="kontrol">
             <div class="kontrol-grup">
               <span id="label-durasi">Durasi</span>
               <div class="segmen" id="pilih-durasi" role="group" aria-labelledby="label-durasi">
@@ -71,41 +70,50 @@
                 <button type="button" data-menit="10" aria-pressed="false">10 menit</button>
               </div>
             </div>
+
             <div class="kontrol-grup">
               <span>Suara</span>
-              <div style="display:flex;gap:12px 18px;flex-wrap:wrap;align-items:center">
+              <div class="studio-saklar">
                 <label class="saklar"><input type="checkbox" id="suara" checked> Nada penanda</label>
                 <label class="saklar"><input type="checkbox" id="panduan-suara"> Aba-aba suara</label>
               </div>
             </div>
-          </div>
 
-          <div class="deret-tombol">
-            <button class="tombol tombol-utama" id="tombol-mulai" type="button" style="min-width:160px">Mulai</button>
-            <button class="tombol tombol-garis" id="tombol-henti" type="button" hidden>Hentikan</button>
-          </div>
+            <div class="deret-tombol studio-tombol">
+              <button class="tombol tombol-utama" id="tombol-mulai" type="button">Mulai</button>
+              <button class="tombol tombol-garis" id="tombol-henti" type="button" hidden>Hentikan</button>
+            </div>
 
-          <p class="peringatan-latihan" role="note">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg>
-            <span>Hentikan latihan bila pusing atau tidak nyaman.</span>
-          </p>
+            <p class="peringatan-latihan" role="note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg>
+              <span>Hentikan latihan bila pusing atau tidak nyaman.</span>
+            </p>
 
-          <div class="catatan" id="pesan-selesai" hidden>
-            <strong>Latihan selesai.</strong>
-            <p>Duduk diam sejenak dan biarkan napas kembali normal. Perhatikan apa yang berubah di tubuh dan pikiran Anda sebelum kembali beraktivitas.</p>
-          </div>
-
-          <div class="info-teknik">
-            <div><h4>Manfaat</h4><p id="info-manfaat"></p></div>
-            <div><h4>Cara melakukan</h4><p id="info-cara"></p></div>
-            <div><h4>Kapan dipakai</h4><p id="info-kapan"></p></div>
+            <div class="catatan studio-selesai" id="pesan-selesai" hidden>
+              <strong>Latihan selesai.</strong>
+              <p>Duduk diam sejenak dan biarkan napas kembali normal sebelum beraktivitas.</p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- ===== PENJELASAN TEKNIK ===== -->
+    <section class="bagian bagian-putih studio-info">
+      <div class="wadah">
+        <div class="kepala-bagian" style="margin-bottom:28px">
+          <span class="penanda">Tentang teknik yang dipilih</span>
+        </div>
+        <div class="info-teknik">
+          <div><h4>Manfaat</h4><p id="info-manfaat"></p></div>
+          <div><h4>Cara melakukan</h4><p id="info-cara"></p></div>
+          <div><h4>Kapan dipakai</h4><p id="info-kapan"></p></div>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== TES JEDA NAPAS ===== -->
-    <section class="bagian bagian-putih" id="tes">
+    <section class="bagian" id="tes">
       <div class="wadah tes-tata">
         <div style="display:grid;gap:24px">
           <div class="kepala-bagian" style="margin-bottom:0">
@@ -159,8 +167,8 @@
 
   <div id="footer"></div>
 
-  <script src="assets/js/pengaturan.js?v=20261006-4"></script>
-  <script src="assets/js/main.js?v=20261006-4"></script>
-  <script src="assets/js/latihan.js?v=20261006-4"></script>
+  <script src="assets/js/pengaturan.js?v=20261006-6"></script>
+  <script src="assets/js/main.js?v=20261006-6"></script>
+  <script src="assets/js/latihan.js?v=20261006-6"></script>
 </body>
 </html>
