@@ -176,6 +176,8 @@ p { margin: 0; }
 .hero-isi > * { min-width: 0; }
 .hero-teks { display: grid; gap: 26px; }
 .hero-teks h1 { max-width: 12ch; }
+.hero-teks h1.hero-judul { max-width: none; font-size: clamp(2.4rem, 4.6vw, 4.1rem); }
+.hero-judul .baris { display: block; }
 .hero-catatan { display: flex; align-items: center; gap: 14px; color: var(--redup); font-size: .95rem; }
 .hero-catatan img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; object-position: 50% 20%; }
 
