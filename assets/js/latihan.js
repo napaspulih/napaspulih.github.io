@@ -428,6 +428,7 @@ const UCAPAN_FASE = ["Tarik", "Tahan", "Buang", "Tahan"];
   function putar() {
     const d = (performance.now() - mulai) / 1000;
     angka.innerHTML = `${d.toFixed(1).replace(".", ",")}<small> dtk</small>`;
+    penunjuk.style.left = Math.min(100, (d / 40) * 100) + "%";
     raf = requestAnimationFrame(putar);
   }
 
@@ -436,11 +437,17 @@ const UCAPAN_FASE = ["Tarik", "Tahan", "Buang", "Tahan"];
       jalan = true; mulai = performance.now();
       tombol.textContent = "Berhenti, saya perlu bernapas";
       hasil.hidden = true;
+      // kembalikan penanda skala ke 0, lalu biarkan bergerak mengikuti hitungan
+      penunjuk.style.transition = "none";
+      penunjuk.style.left = "0%";
+      angka.innerHTML = `0<small> dtk</small>`;
       raf = requestAnimationFrame(putar);
     } else {
       jalan = false; cancelAnimationFrame(raf);
       const d = Math.round((performance.now() - mulai) / 1000);
       angka.innerHTML = `${d}<small> dtk</small>`;
+      penunjuk.style.transition = "";
+      penunjuk.style.left = Math.min(100, (d / 40) * 100) + "%";
       tombol.textContent = "Ulangi tes";
       if (d < 1) return;
       const k = KATEGORI.find((x) => d < x.batas);
