@@ -12,7 +12,7 @@ const PENGATURAN = {
   // Contoh: 0851-1714-2198  ->  "6285117142198"
   whatsapp: "6285117142198",
 
-  email: "dikaduwiyanto@gmail.com",
+  email: "napaspulih@gmail.com",
 
   // Tautan media sosial. Kosongkan ("") jika belum ada; tombolnya akan tersembunyi.
   instagram: "https://www.instagram.com/napaspulih",
