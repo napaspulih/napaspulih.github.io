@@ -13,7 +13,12 @@
   document.querySelectorAll("[data-keluar]").forEach((b) => b.addEventListener("click", keluar));
 
   let semuaPeserta = [];
-  const ALAMAT_KELAS = "https://napaspulih.github.io/kelas.html";
+  // Alamat Kelas Saya untuk pesan WhatsApp: ikuti alamat situs yang sedang dibuka,
+  // kecuali saat dibuka di laptop (localhost atau file), pakai alamatWeb di pengaturan.js.
+  const diLaptop = !/^https?:$/.test(location.protocol) || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+  const ALAMAT_KELAS = diLaptop
+    ? `${PENGATURAN.alamatWeb.replace(/\/+$/, "")}/kelas.html`
+    : new URL("kelas.html", location.href).href;
 
   /* ----- Tab ----- */
   const tab = { peserta: $("#tab-peserta"), materi: $("#tab-materi") };

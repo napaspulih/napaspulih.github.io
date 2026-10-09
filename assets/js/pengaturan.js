@@ -7,6 +7,11 @@
    ========================================================= */
 
 const PENGATURAN = {
+  // Alamat website yang sudah online, TANPA garis miring di akhir.
+  // Dipakai di pesan WhatsApp untuk peserta kelas. Ganti bila pindah domain,
+  // misalnya "https://napaspulih.com".
+  alamatWeb: "https://napaspulih.github.io",
+
   // Nomor WhatsApp untuk semua tombol pendaftaran & pemesanan.
   // Tulis dengan kode negara 62, TANPA tanda +, spasi, atau angka 0 di depan.
   // Contoh: 0851-1714-2198  ->  "6285117142198"

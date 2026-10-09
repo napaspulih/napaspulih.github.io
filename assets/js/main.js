@@ -38,8 +38,11 @@ const tautanWA = (pesan) => `https://wa.me/${PENGATURAN.whatsapp}?text=${encodeU
 
 function bukaWA(pesan, wadahCadangan) {
   const url = tautanWA(pesan);
-  const jendela = window.open(url, "_blank", "noopener");
-  if (!jendela && wadahCadangan) {
+  // Tanpa "noopener" di sini: dengan "noopener", window.open selalu mengembalikan null
+  // sehingga tombol cadangan selalu muncul. Sambungan ke jendela baru diputus manual.
+  const jendela = window.open(url, "_blank");
+  if (jendela) jendela.opener = null;
+  else if (wadahCadangan) {
     wadahCadangan.innerHTML = `<a class="tombol tombol-utama" href="${url}" target="_blank" rel="noopener">${IKON.wa} Buka WhatsApp</a>`;
   }
 }
